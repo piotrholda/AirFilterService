@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 
 import static java.lang.Math.max;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @EnableScheduling
 @Service
@@ -59,14 +60,23 @@ public class AirlyScheduler {
     private void read() {
         System.out.println("" + new Date() + " Load Airly data.");
         for (Integer id : applicationProperties.getInstallationIds()) {
-            Response<Measurements> response = airlyService.getMeasurements(id);
-            lastUpdateTime = new Date();
-            cache.update(id, response.getBody());
-            limitDay = response.getLimitDay();
-            limitMinute = response.getRemainingMinute();
-            // TODO Log if limit is different than in the properties.
-            remainingDay = response.getRemainingDay();
-            remainingMinute = response.getRemainingMinute();
+            airlyService.getMeasurements(id).ifPresent(response -> {
+                lastUpdateTime = new Date();
+                cache.update(id, response.getBody());
+                if (nonNull(response.getLimitDay())) {
+                    limitDay = response.getLimitDay();
+                }
+                if (nonNull(response.getRemainingMinute())) {
+                    limitMinute = response.getRemainingMinute();
+                }
+                // TODO Log if limit is different than in the properties.
+                if (nonNull(response.getRemainingDay())) {
+                    remainingDay = response.getRemainingDay();
+                }
+                if (nonNull(response.getRemainingMinute())) {
+                    remainingMinute = response.getRemainingMinute();
+                }
+            });
         }
     }
 
@@ -78,16 +88,17 @@ public class AirlyScheduler {
 
     private long intervalInMilliseconds() {
         long toMidnight = todayMidnight() - lastUpdateTime.getTime();
-        if (remainingDay.equals(0)) {
+        int numberOfInstallations = applicationProperties.getInstallationIds().size();
+        if (remainingDay < numberOfInstallations) {
             return toMidnight + SAFE_SHIFT_TIME;
         }
         long dailyTick = toMidnight / remainingDay;
         long toNextMinute = nextMinute() - lastUpdateTime.getTime();
-        if (remainingMinute.equals(0)) {
+        if (remainingMinute < numberOfInstallations) {
             return toNextMinute + SAFE_SHIFT_TIME;
         }
         long minutelyTick = toNextMinute / remainingMinute;
-        return max(dailyTick, minutelyTick) * applicationProperties.getInstallationIds().size();
+        return max(dailyTick, minutelyTick) * numberOfInstallations;
     }
 
     private long todayMidnight() {
