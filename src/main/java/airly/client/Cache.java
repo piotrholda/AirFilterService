@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,7 +25,12 @@ public class Cache {
     }
 
     public void update(Integer installationId, Measurements measurements) {
-        if (nonNull(measurements)) {
+        if (nonNull(measurements)
+                && nonNull(measurements.getCurrent())
+                && nonNull(measurements.getCurrent().getStandards())
+                && !measurements.getCurrent().getStandards().isEmpty()) {
+            System.out.println("" + new Date() + " Airly data updated.");
+
             this.measurements.put(installationId, measurements);
         }
     }
