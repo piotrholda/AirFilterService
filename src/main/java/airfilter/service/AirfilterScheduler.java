@@ -39,7 +39,6 @@ public class AirfilterScheduler {
     @Scheduled(fixedRate = 1000)
     public void update() throws IOException, InterruptedException {
         boolean isOn = cache.isNormExceeded() && !isAbsence();
-        System.out.println("" + new Date() + " Air filter state is " + (isOn ? "on" : "off"));
         if (isOn) {
             on();
         } else {
@@ -49,6 +48,7 @@ public class AirfilterScheduler {
 
     private void on() throws IOException, InterruptedException {
         if (OFF.equals(filterState)) {
+            System.out.println("" + new Date() + " Air filter on");
             executor.execute(airfilterProperties.getDeviceName(), airfilterProperties.getDeviceOn());
             filterState = ON;
         }
@@ -56,6 +56,7 @@ public class AirfilterScheduler {
 
     private void off() throws IOException, InterruptedException {
         if (ON.equals(filterState)) {
+            System.out.println("" + new Date() + " Air filter off");
             executor.execute(airfilterProperties.getDeviceName(), airfilterProperties.getDeviceOff());
             filterState = OFF;
         }
