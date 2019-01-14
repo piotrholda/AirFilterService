@@ -5,9 +5,12 @@ import airly.client.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class AirlyService {
@@ -26,20 +29,34 @@ public class AirlyService {
     @Autowired
     AirlyProperties airlyProperties;
 
-    public Response<Measurements> getMeasurements(Integer installationId) {
+    public Optional<Response<Measurements>> getMeasurements(Integer installationId) {
         String url = applicationProperties.getApiUrl() + MEASUREMENTS_URI + installationId;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(ACCEPT));
         headers.set("apikey", airlyProperties.getKey());
         HttpEntity<?> requestEntity = new HttpEntity<>(headers);
         RestTemplate template = new RestTemplate();
-        ResponseEntity<Measurements> responseEntity = template.exchange(url, HttpMethod.GET, requestEntity, Measurements.class);
-        Response<Measurements> response = readResponse(responseEntity, responseEntity.getBody());
-        return response;
+        try {
+            ResponseEntity<Measurements> responseEntity = template.exchange(url, HttpMethod.GET, requestEntity, Measurements.class);
+
+                Response<Measurements> response = readResponse(responseEntity, responseEntity.getBody());
+                return Optional.of(response);
+
+        } catch (RestClientException e) {
+            System.out.println("" + new Date() + " Error during get data from Airly:");
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     private Response<Measurements> readResponse(ResponseEntity<Measurements> responseEntity, Measurements body) {
-        Response<Measurements> response = new Response<>(body);
+        Response<Measurements> response;
+        if (HttpStatus.OK.equals(responseEntity.getStatusCode())) {
+            response = new Response<>(body);
+        } else {
+            System.out.println("" + new Date() + " Response code: " + responseEntity.getStatusCode());
+            response = new Response<>();
+        }
         HttpHeaders responseHeaders = responseEntity.getHeaders();
         if (responseHeaders.containsKey(X_RATE_LIMIT_LIMIT_DAY)) {
             response.setLimitDay(Integer.parseInt(responseHeaders.getFirst(X_RATE_LIMIT_LIMIT_DAY)));
