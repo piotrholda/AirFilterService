@@ -67,7 +67,7 @@ public class AirlyScheduler {
                     limitDay = response.getLimitDay();
                 }
                 if (nonNull(response.getRemainingMinute())) {
-                    limitMinute = response.getRemainingMinute();
+                    limitMinute = response.getLimitMinute();
                 }
                 // TODO Log if limit is different than in the properties.
                 if (nonNull(response.getRemainingDay())) {
