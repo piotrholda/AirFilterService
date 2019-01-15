@@ -90,11 +90,13 @@ public class AirlyScheduler {
         long toMidnight = todayMidnight() - lastUpdateTime.getTime();
         int numberOfInstallations = applicationProperties.getInstallationIds().size();
         if (remainingDay < numberOfInstallations) {
+            remainingDay = applicationProperties.getLimitDay();
             return toMidnight + SAFE_SHIFT_TIME;
         }
         long dailyTick = toMidnight / remainingDay;
         long toNextMinute = nextMinute() - lastUpdateTime.getTime();
         if (remainingMinute < numberOfInstallations) {
+            remainingMinute = applicationProperties.getLimitMinute();
             return toNextMinute + SAFE_SHIFT_TIME;
         }
         long minutelyTick = toNextMinute / remainingMinute;
