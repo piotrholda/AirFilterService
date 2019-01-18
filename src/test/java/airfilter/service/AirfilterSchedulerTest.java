@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static java.util.Calendar.JANUARY;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -53,9 +54,9 @@ public class AirfilterSchedulerTest {
     public void shouldNotChangeStatusWhenIsWorkingDayAbsenceAndThereIsPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar calendar = new GregorianCalendar();
-        calendar.set(2019, Calendar.JANUARY, 18, 11, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(calendar.getTime());
+        Calendar absence = new GregorianCalendar();
+        absence.set(2019, JANUARY, 18, 11, 15, 49);
+        when(timeService.getCurrentTime()).thenReturn(absence.getTime());
         when(cache.isNormExceeded()).thenReturn(true);
         when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
         when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
@@ -84,9 +85,9 @@ public class AirfilterSchedulerTest {
     public void shouldTurnOnWhenIsNoWorkingDayAbsenceAndThereIsPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar calendar = new GregorianCalendar();
-        calendar.set(2019, Calendar.JANUARY, 18, 12, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(calendar.getTime());
+        Calendar presence = new GregorianCalendar();
+        presence.set(2019, JANUARY, 18, 12, 15, 49);
+        when(timeService.getCurrentTime()).thenReturn(presence.getTime());
         when(cache.isNormExceeded()).thenReturn(true);
         when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
         when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
@@ -105,9 +106,9 @@ public class AirfilterSchedulerTest {
 
         // given
         Calendar presence = new GregorianCalendar();
-        presence.set(2019, Calendar.JANUARY, 18, 12, 15, 49);
+        presence.set(2019, JANUARY, 18, 12, 15, 49);
         Calendar absence = new GregorianCalendar();
-        absence.set(2019, Calendar.JANUARY, 18, 11, 15, 49);
+        absence.set(2019, JANUARY, 18, 11, 15, 49);
         when(timeService.getCurrentTime()).thenReturn(presence.getTime()).thenReturn(absence.getTime());
         when(cache.isNormExceeded()).thenReturn(true);
         when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
@@ -130,9 +131,9 @@ public class AirfilterSchedulerTest {
 
         // given
         Calendar presence = new GregorianCalendar();
-        presence.set(2019, Calendar.JANUARY, 18, 12, 15, 49);
+        presence.set(2019, JANUARY, 18, 12, 15, 49);
         Calendar absence = new GregorianCalendar();
-        absence.set(2019, Calendar.JANUARY, 18, 11, 15, 49);
+        absence.set(2019, JANUARY, 18, 11, 15, 49);
         when(timeService.getCurrentTime()).thenReturn(presence.getTime()).thenReturn(absence.getTime());
         when(cache.isNormExceeded()).thenReturn(true).thenReturn(false);
         when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
@@ -155,7 +156,7 @@ public class AirfilterSchedulerTest {
 
         // given
         Calendar presence = new GregorianCalendar();
-        presence.set(2019, Calendar.JANUARY, 18, 12, 15, 49);
+        presence.set(2019, JANUARY, 18, 12, 15, 49);
         when(timeService.getCurrentTime()).thenReturn(presence.getTime());
         when(cache.isNormExceeded()).thenReturn(true).thenReturn(false);
         when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
