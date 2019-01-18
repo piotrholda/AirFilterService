@@ -26,6 +26,9 @@ public class AirfilterScheduler {
     AirfilterProperties airfilterProperties;
 
     @Autowired
+    TimeService timeService;
+
+    @Autowired
     Cache cache;
 
     @Autowired
@@ -48,7 +51,7 @@ public class AirfilterScheduler {
 
     private void on() throws IOException, InterruptedException {
         if (OFF.equals(filterState)) {
-            System.out.println("" + new Date() + " Air filter on");
+            System.out.println("" + timeService.getCurrentTime() + " Air filter on");
             executor.execute(airfilterProperties.getDeviceName(), airfilterProperties.getDeviceOn());
             filterState = ON;
         }
@@ -56,14 +59,14 @@ public class AirfilterScheduler {
 
     private void off() throws IOException, InterruptedException {
         if (ON.equals(filterState)) {
-            System.out.println("" + new Date() + " Air filter off");
+            System.out.println("" + timeService.getCurrentTime() + " Air filter off");
             executor.execute(airfilterProperties.getDeviceName(), airfilterProperties.getDeviceOff());
             filterState = OFF;
         }
     }
 
     private boolean isAbsence() {
-        Date now = new Date();
+        Date now = timeService.getCurrentTime();
         return isWorkingDay(now) && isWorkingHour(now);
     }
 
