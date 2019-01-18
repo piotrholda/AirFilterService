@@ -126,6 +126,31 @@ public class AirfilterSchedulerTest {
     }
 
     @Test
+    public void shouldTurnOffWhenIsWorkingDayAbsenceAndThereIsNoPollution() throws IOException, InterruptedException {
+
+        // given
+        Calendar presence = new GregorianCalendar();
+        presence.set(2019, Calendar.JANUARY, 18, 12, 15, 49);
+        Calendar absence = new GregorianCalendar();
+        absence.set(2019, Calendar.JANUARY, 18, 11, 15, 49);
+        when(timeService.getCurrentTime()).thenReturn(presence.getTime()).thenReturn(absence.getTime());
+        when(cache.isNormExceeded()).thenReturn(true).thenReturn(false);
+        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
+        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
+        when(airfilterProperties.getDeviceName()).thenReturn(DEVICE);
+        when(airfilterProperties.getDeviceOn()).thenReturn(onCodes);
+        when(airfilterProperties.getDeviceOff()).thenReturn(offCodes);
+
+        // when
+        airfilterScheduler.update();
+        verify(executor, times(1)).execute(DEVICE, onCodes);
+        airfilterScheduler.update();
+
+        // then
+        verify(executor, times(1)).execute(DEVICE, offCodes);
+    }
+
+    @Test
     public void shouldTurnOffWhenThereIsNoPollution() throws IOException, InterruptedException {
 
         // given
