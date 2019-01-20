@@ -43,7 +43,7 @@ public class ConfigControllerTest {
     @Before
     public void setUp() {
         config = PredefinedConfig.create();
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
     }
 
     @Test
@@ -54,23 +54,23 @@ public class ConfigControllerTest {
         when(configService.getConfig()).thenReturn(config);
 
         // when
-        MvcResult result = mockMvc.perform(get("/config")
+        MvcResult mvcResult = mockMvc.perform(get("/config")
                 .contentType(APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
 
         // then
-        String json = result.getResponse().getContentAsString();
-        Config configResult = new ObjectMapper().readValue(json, Config.class);
-        assertThat(configResult).isEqualTo(config);
+        String json = mvcResult.getResponse().getContentAsString();
+        Config result = new ObjectMapper().readValue(json, Config.class);
+        assertThat(result).isEqualTo(config);
     }
 
     @Test
-    public void shouldUpdateConfigObject() throws Exception    {
+    public void shouldUpdateConfigObject() throws Exception {
 
         // when
-        mockMvc.perform( put("/config")
+        mockMvc.perform(put("/config")
                 .content(new ObjectMapper().writeValueAsString(config))
                 .contentType(APPLICATION_JSON_UTF8))
                 .andDo(print())
