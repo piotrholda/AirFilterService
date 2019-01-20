@@ -1,7 +1,7 @@
 package airfilter.service;
 
-import airly.client.Cache;
-import irsend.executor.Executor;
+import airfilter.airly.Cache;
+import airfilter.irsend.Executor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

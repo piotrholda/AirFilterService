@@ -1,7 +1,7 @@
 package airfilter.service;
 
-import airly.client.Cache;
-import irsend.executor.Executor;
+import airfilter.airly.Cache;
+import airfilter.irsend.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

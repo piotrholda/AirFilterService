@@ -1,8 +1,8 @@
-package airly.client;
+package airfilter.airly;
 
-import airly.client.entity.Current;
-import airly.client.entity.Measurements;
-import airly.client.entity.Standard;
+import airfilter.airly.entity.Current;
+import airfilter.airly.entity.Measurements;
+import airfilter.airly.entity.Standard;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

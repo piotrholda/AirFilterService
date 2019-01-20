@@ -1,7 +1,7 @@
 package airfilter.service;
 
-import airly.client.AirlyProperties;
-import airly.client.ApplicationProperties;
+import airfilter.airly.AirlyProperties;
+import airfilter.airly.ApplicationProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

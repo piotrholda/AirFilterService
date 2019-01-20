@@ -1,12 +1,11 @@
 package airfilter.service;
 
-import airly.client.AirlyScheduler;
-import airly.client.AirlyService;
-import airly.client.Cache;
-import irsend.executor.Executor;
+import airfilter.airly.AirlyScheduler;
+import airfilter.airly.AirlyService;
+import airfilter.airly.Cache;
+import airfilter.irsend.Executor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class AirFilterServiceConfiguration {

@@ -1,7 +1,5 @@
-package airly.client;
+package airfilter.airly;
 
-import airly.client.entity.Measurements;
-import airly.client.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

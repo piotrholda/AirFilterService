@@ -1,4 +1,4 @@
-package airly.client.entity;
+package airfilter.airly.entity;
 
 public class Standard {
 

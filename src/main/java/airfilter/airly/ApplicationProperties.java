@@ -1,4 +1,4 @@
-package airly.client;
+package airfilter.airly;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

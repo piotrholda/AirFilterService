@@ -1,4 +1,4 @@
-package airly.client.entity;
+package airfilter.airly.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

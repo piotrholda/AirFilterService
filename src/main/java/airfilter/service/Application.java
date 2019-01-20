@@ -1,7 +1,7 @@
 package airfilter.service;
 
-import airly.client.AirlyProperties;
-import airly.client.ApplicationProperties;
+import airfilter.airly.AirlyProperties;
+import airfilter.airly.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

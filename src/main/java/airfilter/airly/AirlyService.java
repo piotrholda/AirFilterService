@@ -1,7 +1,7 @@
-package airly.client;
+package airfilter.airly;
 
-import airly.client.entity.Measurements;
-import airly.client.entity.Response;
+import airfilter.airly.entity.Measurements;
+import airfilter.airly.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
