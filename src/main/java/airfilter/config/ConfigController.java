@@ -11,7 +11,7 @@ public class ConfigController {
     @Autowired
     ConfigService configService;
 
-    @GetMapping()
+    @GetMapping
     public Config getConfig() {
         return configService.getConfig();
     }
