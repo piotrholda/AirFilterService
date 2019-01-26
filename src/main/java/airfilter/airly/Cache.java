@@ -3,11 +3,12 @@ package airfilter.airly;
 import airfilter.airly.entity.Current;
 import airfilter.airly.entity.Measurements;
 import airfilter.airly.entity.Standard;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +17,8 @@ import static java.util.Objects.nonNull;
 
 @Service
 public class Cache {
+
+    private Logger logger = LoggerFactory.getLogger(Cache.class);
 
     private Map<Integer, Measurements> measurements;
 
@@ -29,8 +32,7 @@ public class Cache {
                 && nonNull(measurements.getCurrent())
                 && nonNull(measurements.getCurrent().getStandards())
                 && !measurements.getCurrent().getStandards().isEmpty()) {
-            System.out.println("" + new Date() + " Airly data updated.");
-
+            logger.info("Airly data updated.");
             this.measurements.put(installationId, measurements);
         }
     }

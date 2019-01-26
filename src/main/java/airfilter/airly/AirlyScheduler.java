@@ -1,5 +1,7 @@
 package airfilter.airly;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +20,9 @@ import static java.util.Objects.nonNull;
 @Service
 public class AirlyScheduler {
 
-    public static final int SAFE_SHIFT_TIME = 1000;
+    private Logger logger = LoggerFactory.getLogger(AirlyScheduler.class);
+
+    private static final int SAFE_SHIFT_TIME = 1000;
     private Date lastUpdateTime;
     private Integer limitDay;
     private Integer limitMinute;
@@ -56,18 +60,23 @@ public class AirlyScheduler {
     }
 
     private void read() {
-        System.out.println("" + new Date() + " Load Airly data.");
+        logger.info("Load Airly data.");
         for (Integer id : applicationProperties.getInstallationIds()) {
             airlyService.getMeasurements(id).ifPresent(response -> {
                 lastUpdateTime = new Date();
                 cache.update(id, response.getBody());
                 if (nonNull(response.getLimitDay())) {
-                    limitDay = response.getLimitDay();
+                    if (!limitDay.equals(response.getLimitDay())) {
+                        logger.info("limitDay {} is different than property value {}", response.getLimitDay(), limitDay);
+                        limitDay = response.getLimitDay();
+                    }
                 }
                 if (nonNull(response.getRemainingMinute())) {
-                    limitMinute = response.getLimitMinute();
+                    if (!limitMinute.equals(response.getLimitMinute())) {
+                        logger.info("limitMinute {} is different than property value {}", response.getLimitMinute(), limitMinute);
+                        limitMinute = response.getLimitMinute();
+                    }
                 }
-                // TODO Log if limit is different than in the properties.
                 if (nonNull(response.getRemainingDay())) {
                     remainingDay = response.getRemainingDay();
                 }
