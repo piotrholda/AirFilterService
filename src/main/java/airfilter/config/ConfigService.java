@@ -7,15 +7,12 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.locks.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -46,49 +43,16 @@ public class ConfigService {
             boolean timeMatch = isTimeInRange(current).test(a);
             boolean dayOfWeekSet = isDayOfWeekSet(current).test(a);
             boolean dayOfWeekMatch = isDayOfWeekInRange(current).test(a);
-            if (dateSet) {
-                if (dateMatch) {
-                    if (timeSet) {
-                        if (timeMatch) {
-                          if (dayOfWeekSet) {
-                              return dayOfWeekMatch;
-                          } else {
-                              return true;
-                          }
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        if (dayOfWeekSet) {
-                            return dayOfWeekMatch;
-                        } else {
-                            return true;
-                        }
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                if (timeSet) {
-                    if (timeMatch) {
-                        if (dayOfWeekSet) {
-                            return dayOfWeekMatch;
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return false;
-                    }
-
-                } else {
-                    if (dayOfWeekSet) {
-                        return dayOfWeekMatch;
-                    } else {
-                        return false;
-                    }
-                }
-            }
+            return (!dateSet || dateMatch) && checkTime(dateSet, timeSet, timeMatch, dayOfWeekSet, dayOfWeekMatch);
         };
+    }
+
+    private boolean checkTime(boolean dateSet, boolean timeSet, boolean timeMatch, boolean dayOfWeekSet, boolean dayOfWeekMatch) {
+        return (!timeSet || timeMatch) && checkDayOfWeek(dateSet, timeSet, dayOfWeekSet, dayOfWeekMatch);
+    }
+
+    private boolean checkDayOfWeek(boolean dateSet, boolean timeSet, boolean dayOfWeekSet, boolean dayOfWeekMatch) {
+        return dayOfWeekSet ? dayOfWeekMatch : dateSet || timeSet;
     }
 
     private Predicate<Absence> isDayOfWeekSet(LocalDateTime current) {
