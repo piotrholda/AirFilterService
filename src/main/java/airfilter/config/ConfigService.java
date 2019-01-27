@@ -36,12 +36,12 @@ public class ConfigService {
     }
 
     private Predicate<Absence> isAbsenceMatch(LocalDateTime current) {
-        return (isDateSet(current).negate().or(isDateInRange(current)))
-                .and(isTimeSet(current).negate().or(isTimeInRange(current)))
-                .and(isDayOfWeekSet(current).negate().or(isDayOfWeekInRange(current)));
+        return (isDateSet().negate().or(isDateInRange(current)))
+                .and(isTimeSet().negate().or(isTimeInRange(current)))
+                .and(isDayOfWeekSet().negate().or(isDayOfWeekInRange(current)));
     }
 
-    private Predicate<Absence> isDateSet(LocalDateTime current) {
+    private Predicate<Absence> isDateSet() {
         return a -> nonNull(a.getDateFrom());
     }
 
@@ -52,16 +52,15 @@ public class ConfigService {
                                 .or(isDateToToday(current))));
     }
 
-    private Predicate<Absence> isTimeSet(LocalDateTime current) {
+    private Predicate<Absence> isTimeSet() {
         return a -> nonNull(a.getTimeFrom()) && nonNull(a.getTimeTo());
     }
 
     private Predicate<Absence> isTimeInRange(LocalDateTime current) {
-        return a -> nonNull(a.getTimeFrom()) && !a.getTimeFrom().isAfter(current.toLocalTime())
-                && nonNull(a.getTimeTo()) && !a.getTimeTo().isBefore(current.toLocalTime());
+        return a -> !a.getTimeFrom().isAfter(current.toLocalTime()) && !a.getTimeTo().isBefore(current.toLocalTime());
     }
 
-    private Predicate<Absence> isDayOfWeekSet(LocalDateTime current) {
+    private Predicate<Absence> isDayOfWeekSet() {
         return a -> nonNull(a.getDaysOfWeek()) && !a.getDaysOfWeek().isEmpty();
     }
 

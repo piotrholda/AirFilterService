@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static java.time.DayOfWeek.*;
 import static java.time.Month.JANUARY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.list;
@@ -138,8 +138,8 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -156,8 +156,8 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -174,8 +174,8 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -191,8 +191,8 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -208,8 +208,8 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -225,8 +225,8 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
         configService.setConfig(config);
 
         // when
@@ -246,7 +246,7 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -263,7 +263,7 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -281,7 +281,7 @@ public class ConfigServiceTest {
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
         when(absence.getDateTo()).thenReturn(LocalDate.of(2019, JANUARY, 11));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -299,7 +299,7 @@ public class ConfigServiceTest {
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
         when(absence.getDateTo()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -316,9 +316,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -335,9 +335,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -354,9 +354,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -372,9 +372,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -390,9 +390,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -408,9 +408,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(THURSDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -429,7 +429,7 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -446,7 +446,7 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -464,7 +464,7 @@ public class ConfigServiceTest {
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
         when(absence.getDateTo()).thenReturn(LocalDate.of(2019, JANUARY, 11));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -482,7 +482,7 @@ public class ConfigServiceTest {
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 9));
         when(absence.getDateTo()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -499,9 +499,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -518,9 +518,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -537,9 +537,9 @@ public class ConfigServiceTest {
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
         when(absence.getDateFrom()).thenReturn(LocalDate.of(2019, JANUARY, 10));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -555,9 +555,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -573,9 +573,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(12,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(11, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(12, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
@@ -591,9 +591,9 @@ public class ConfigServiceTest {
         // given
         LocalDateTime current = LocalDateTime.of(2019, JANUARY, 10, 12, 38, 50);
         when(config.getAbsences()).thenReturn(Lists.newArrayList(absence));
-        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13,0,0));
-        when(absence.getTimeTo()).thenReturn(LocalTime.of(14,0,0));
-        when(absence.getDaysOfWeek()).thenReturn(list(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        when(absence.getTimeFrom()).thenReturn(LocalTime.of(13, 0, 0));
+        when(absence.getTimeTo()).thenReturn(LocalTime.of(14, 0, 0));
+        when(absence.getDaysOfWeek()).thenReturn(list(WEDNESDAY, FRIDAY));
         configService.setConfig(config);
 
         // when
