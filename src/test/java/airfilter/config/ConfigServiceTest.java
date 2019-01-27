@@ -63,8 +63,6 @@ public class ConfigServiceTest {
         assertThat(result).isEqualTo(config);
     }
 
-///
-
     @Test
     public void shouldReturnAbsenceWhenDateFromIsToday() {
 
@@ -235,9 +233,6 @@ public class ConfigServiceTest {
         // then
         assertThat(isAbsence).isFalse();
     }
-
-/// day of week match
-
 
     @Test
     public void shouldReturnAbsenceWhenDateFromIsTodayAndDayOfWeekMatch() {
@@ -419,8 +414,6 @@ public class ConfigServiceTest {
         // then
         assertThat(isAbsence).isFalse();
     }
-
-/// day of week dont match
 
     @Test
     public void shouldReturnAbsenceWhenDateFromIsTodayAndDayOfWeekDontMatch() {
