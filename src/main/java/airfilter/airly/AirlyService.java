@@ -2,6 +2,8 @@ package airfilter.airly;
 
 import airfilter.airly.entity.Measurements;
 import airfilter.airly.entity.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -9,11 +11,12 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
 public class AirlyService {
+
+    private Logger logger = LoggerFactory.getLogger(AirlyService.class);
 
     private static final String MEASUREMENTS_URI = "/measurements/installation?installationId=";
     private static final MediaType[] ACCEPT = {MediaType.APPLICATION_JSON};
@@ -43,8 +46,7 @@ public class AirlyService {
                 return Optional.of(response);
 
         } catch (RestClientException e) {
-            System.out.println("" + new Date() + " Error during get data from Airly:");
-            e.printStackTrace();
+            logger.error("Error during get data from Airly.", e);
             return Optional.empty();
         }
     }
@@ -54,7 +56,7 @@ public class AirlyService {
         if (HttpStatus.OK.equals(responseEntity.getStatusCode())) {
             response = new Response<>(body);
         } else {
-            System.out.println("" + new Date() + " Response code: " + responseEntity.getStatusCode());
+            logger.info("Response code: {}", responseEntity.getStatusCode());
             response = new Response<>();
         }
         HttpHeaders responseHeaders = responseEntity.getHeaders();

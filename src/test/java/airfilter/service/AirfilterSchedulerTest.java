@@ -1,6 +1,9 @@
 package airfilter.service;
 
 import airfilter.airly.Cache;
+import airfilter.config.ConfigService;
+import airfilter.config.entity.Absence;
+import airfilter.config.entity.Config;
 import airfilter.irsend.Executor;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.Calendar.JANUARY;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -33,7 +34,13 @@ public class AirfilterSchedulerTest {
     private AirfilterProperties airfilterProperties;
 
     @Mock
-    TimeService timeService;
+    private ConfigService configService;
+
+    @Mock
+    private Config config;
+
+    @Mock
+    private Absence absence;
 
     @Mock
     private Cache cache;
@@ -51,15 +58,11 @@ public class AirfilterSchedulerTest {
     }
 
     @Test
-    public void shouldNotChangeStatusWhenIsWorkingDayAbsenceAndThereIsPollution() throws IOException, InterruptedException {
+    public void shouldNotChangeStatusWhenIsAbsenceAndThereIsPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar absence = new GregorianCalendar();
-        absence.set(2019, JANUARY, 18, 11, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(absence.getTime());
+        when(configService.isAbsence(any(LocalDateTime.class))).thenReturn(true);
         when(cache.isNormExceeded()).thenReturn(true);
-        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
-        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
 
         // when
         airfilterScheduler.update();
@@ -82,15 +85,11 @@ public class AirfilterSchedulerTest {
     }
 
     @Test
-    public void shouldTurnOnWhenIsNoWorkingDayAbsenceAndThereIsPollution() throws IOException, InterruptedException {
+    public void shouldTurnOnWhenIsNoAbsenceAndThereIsPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar presence = new GregorianCalendar();
-        presence.set(2019, JANUARY, 18, 12, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(presence.getTime());
+        when(configService.isAbsence(any(LocalDateTime.class))).thenReturn(false);
         when(cache.isNormExceeded()).thenReturn(true);
-        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
-        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
         when(airfilterProperties.getDeviceName()).thenReturn(DEVICE);
         when(airfilterProperties.getDeviceOn()).thenReturn(onCodes);
 
@@ -102,17 +101,11 @@ public class AirfilterSchedulerTest {
     }
 
     @Test
-    public void shouldTurnOffWhenIsWorkingDayAbsenceAndThereIsPollution() throws IOException, InterruptedException {
+    public void shouldTurnOffWhenIsAbsenceAndThereIsPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar presence = new GregorianCalendar();
-        presence.set(2019, JANUARY, 18, 12, 15, 49);
-        Calendar absence = new GregorianCalendar();
-        absence.set(2019, JANUARY, 18, 11, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(presence.getTime()).thenReturn(absence.getTime());
+        when(configService.isAbsence(any(LocalDateTime.class))).thenReturn(false).thenReturn(true);
         when(cache.isNormExceeded()).thenReturn(true);
-        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
-        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
         when(airfilterProperties.getDeviceName()).thenReturn(DEVICE);
         when(airfilterProperties.getDeviceOn()).thenReturn(onCodes);
         when(airfilterProperties.getDeviceOff()).thenReturn(offCodes);
@@ -127,17 +120,11 @@ public class AirfilterSchedulerTest {
     }
 
     @Test
-    public void shouldTurnOffWhenIsWorkingDayAbsenceAndThereIsNoPollution() throws IOException, InterruptedException {
+    public void shouldTurnOffWhenIsAbsenceAndThereIsNoPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar presence = new GregorianCalendar();
-        presence.set(2019, JANUARY, 18, 12, 15, 49);
-        Calendar absence = new GregorianCalendar();
-        absence.set(2019, JANUARY, 18, 11, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(presence.getTime()).thenReturn(absence.getTime());
+        when(configService.isAbsence(any(LocalDateTime.class))).thenReturn(false).thenReturn(true);
         when(cache.isNormExceeded()).thenReturn(true).thenReturn(false);
-        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
-        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
         when(airfilterProperties.getDeviceName()).thenReturn(DEVICE);
         when(airfilterProperties.getDeviceOn()).thenReturn(onCodes);
         when(airfilterProperties.getDeviceOff()).thenReturn(offCodes);
@@ -155,12 +142,8 @@ public class AirfilterSchedulerTest {
     public void shouldTurnOffWhenThereIsNoPollution() throws IOException, InterruptedException {
 
         // given
-        Calendar presence = new GregorianCalendar();
-        presence.set(2019, JANUARY, 18, 12, 15, 49);
-        when(timeService.getCurrentTime()).thenReturn(presence.getTime());
+        when(configService.isAbsence(any(LocalDateTime.class))).thenReturn(false);
         when(cache.isNormExceeded()).thenReturn(true).thenReturn(false);
-        when(airfilterProperties.getAbsenceHourFrom()).thenReturn(11);
-        when(airfilterProperties.getAbsenceHourTo()).thenReturn(12);
         when(airfilterProperties.getDeviceName()).thenReturn(DEVICE);
         when(airfilterProperties.getDeviceOn()).thenReturn(onCodes);
         when(airfilterProperties.getDeviceOff()).thenReturn(offCodes);
